@@ -80,4 +80,9 @@ const deleteAdvancePayment = async (req, res) => {
     }
 };
 
-module.exports = {createAdvancePayment, getAdvancePayment, getAdvancePayments, deleteAdvancePayment, updateAdvancePayment};
+module.exports = {
+    createAdvancePayment,
+     getAdvancePayment,
+      getAdvancePayments,
+       deleteAdvancePayment,
+        updateAdvancePayment};
