@@ -1,4 +1,4 @@
-const AdvancePayment = require('../../../models/AdminModels/BillingManagement/advancepaymentModel');
+const AdvancePayment = require('../../../models/AdminModels/BillingManagement/advancePaymentModel');
 
  const createAdvancePayment = async (req, res) => {
     const { admissionId, patientId, amount, paymentMethod, receiptNo, status } = req.body;
