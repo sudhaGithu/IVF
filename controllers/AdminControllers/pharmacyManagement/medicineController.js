@@ -1,4 +1,4 @@
-const Medicine = require('../../../models/AdminModels/pharmacyManagement/MedicineModel');
+const Medicine = require('../../../models/AdminModels/pharmacyManagement/medicineModel');
 
 // Create a new Medicine
 const createMedicine = async (req, res) => {
