@@ -1,4 +1,4 @@
-const MedicineCategory = require('../../../models/AdminModels/pharmacyManagement/MedicineCategoryModel');
+const MedicineCategory = require('../../../models/AdminModels/pharmacyManagement/medicineCategoryModel');
 const path = require('path');
 const fs = require('fs');
 
