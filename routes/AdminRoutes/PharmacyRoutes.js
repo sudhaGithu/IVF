@@ -6,7 +6,7 @@ const medicineController = require('../../controllers/AdminControllers/pharmacyM
 const TypeController = require('../../controllers/AdminControllers/pharmacyManagement/pharmtypeController');
 const unitController = require('../../controllers/AdminControllers/pharmacyManagement/unitController');
 const vendorController = require('../../controllers/AdminControllers/pharmacyManagement/vendorController');
-const MedicineCategoryController = require('../../controllers/AdminControllers/pharmacyManagement/MedicineCategoryController');
+const MedicineCategoryController = require('../../controllers/AdminControllers/pharmacyManagement/medicineCategoryController');
 const checkPermission = require('../../middlewares/permissionAuthorizer')
 const authentication = require('../../middlewares/authenticate')
 
