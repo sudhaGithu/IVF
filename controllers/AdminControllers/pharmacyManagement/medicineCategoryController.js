@@ -1,75 +1,104 @@
-const MedicineCategory = require('../../../models/AdminModels/pharmacyManagement/medicineCategoryModel');
+const MedicineCategory = require('../../../models/AdminModels/pharmacyManagement/MedicineCategoryModel');
+const path = require('path');
+const fs = require('fs');
 
-exports.createMedicineCategory = async (req, res) => {
-    const { categoryName, description, status } = req.body;
+// Create a new MedicineCategory
+const createMedicineCategory = async (req, res) => {
     try {
+        const { title, sorting, status, showInHome, showInTopMenu, topCategory, type } = req.body;
+        const categoryImage = req.files.categoryImage[0].path;
+        const bannerImage = req.files.bannerImage[0].path;
+
         const newMedicineCategory = new MedicineCategory({
-            categoryName,
-            description,
-            status
+            title,
+            categoryImage,
+            bannerImage,
+            sorting,
+            status,
+            showInHome,
+            showInTopMenu,
+            topCategory,
+            type,
         });
 
         await newMedicineCategory.save();
-        res.status(201).json({ message: 'Medicine Category created successfully', newMedicineCategory });
+        res.status(201).json({ message: "Medicine Category Added Successfully", newMedicineCategory });
     } catch (err) {
-        console.error('Error creating Medicine Category:', err);
-        res.status(400).json({ error: err.message });
+        console.error('Error creating MedicineCategory:', err);
+        res.status(500).send({ error: err.message });
     }
 };
 
-exports.getMedicineCategories = async (req, res) => {
+// Get all MedicineCategories
+const getAllMedicineCategories = async (req, res) => {
     try {
         const medicineCategories = await MedicineCategory.find();
-        res.status(200).json({message: "Medicine Categories Retrieved Succesfully ",medicineCategories});
+        res.status(200).json({ message: "All Medicine Categories retrieved Successfully", medicineCategories });
     } catch (err) {
-        console.error('Error retrieving Medicine Categories:', err);
-        res.status(400).json({ error: err.message });
+        console.error('Error fetching MedicineCategories:', err);
+        res.status(500).send({ error: err.message });
     }
 };
 
-exports.getMedicineCategory = async (req, res) => {
-    const { id } = req.params;
+// Get a single MedicineCategory by ID
+const getMedicineCategoryById = async (req, res) => {
     try {
-        const medicineCategory = await MedicineCategory.findById(id);
+        const medicineCategory = await MedicineCategory.findById(req.params.id);
         if (!medicineCategory) {
             return res.status(404).json({ message: 'Medicine Category not found' });
         }
         res.status(200).json(medicineCategory);
     } catch (err) {
-        console.error('Error retrieving Medicine Category:', err);
-        res.status(400).json({ error: err.message });
+        console.error('Error fetching MedicineCategory:', err);
+        res.status(500).send({ error: err.message });
     }
 };
 
-exports.updateMedicineCategory = async (req, res) => {
-    const { id } = req.params;
-    const { categoryName, description, status } = req.body;
+// Update a MedicineCategory by ID
+const updateMedicineCategory = async (req, res) => {
     try {
-        const updatedMedicineCategory = await MedicineCategory.findByIdAndUpdate(id, {
-            categoryName,
-            description,
-            status
-        }, { new: true });
+        const { title, sorting, status, showInHome, showInTopMenu, topCategory, type } = req.body;
+        const categoryImage = req.files?.categoryImage?.[0]?.path;
+        const bannerImage = req.files?.bannerImage?.[0]?.path;
+
+        const updatedMedicineCategory = await MedicineCategory.findByIdAndUpdate(
+            req.params.id,
+            {
+                title,
+                categoryImage,
+                bannerImage,
+                sorting,
+                status,
+                showInHome,
+                showInTopMenu,
+                topCategory,
+                type,
+            },
+            { new: true }
+        );
+
         if (!updatedMedicineCategory) {
             return res.status(404).json({ message: 'Medicine Category not found' });
         }
         res.status(200).json(updatedMedicineCategory);
     } catch (err) {
-        console.error('Error updating Medicine Category:', err);
-        res.status(400).json({ error: err.message });
+        console.error('Error updating MedicineCategory:', err);
+        res.status(500).send({ error: err.message });
     }
 };
 
-exports.deleteMedicineCategory = async (req, res) => {
-    const { id } = req.params;
+// Delete a MedicineCategory by ID
+const deleteMedicineCategory = async (req, res) => {
     try {
-        const deletedMedicineCategory = await MedicineCategory.findByIdAndDelete(id);
-        if (!deletedMedicineCategory) {
+        const medicineCategory = await MedicineCategory.findByIdAndDelete(req.params.id);
+        if (!medicineCategory) {
             return res.status(404).json({ message: 'Medicine Category not found' });
         }
         res.status(200).json({ message: 'Medicine Category deleted successfully' });
     } catch (err) {
-        console.error('Error deleting Medicine Category:', err);
-        res.status(400).json({ error: err.message });
+        console.error('Error deleting MedicineCategory:', err);
+        res.status(500).send({ error: err.message });
     }
 };
+
+module.exports = { createMedicineCategory, getAllMedicineCategories, getMedicineCategoryById, updateMedicineCategory, deleteMedicineCategory };

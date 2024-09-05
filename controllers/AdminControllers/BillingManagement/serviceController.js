@@ -1,6 +1,6 @@
 const Service = require('../../../models/AdminModels/BillingManagement/serviceModel');
 
-exports.createService = async (req, res) => {
+const createService = async (req, res) => {
     const { serviceName, description, quantity, rate, status } = req.body;
     try {
         const newService = new Service({
@@ -19,7 +19,7 @@ exports.createService = async (req, res) => {
     }
 };
 
-exports.getServices = async (req, res) => {
+const getServices = async (req, res) => {
     try {
         const services = await Service.find();
         res.status(200).json({message:"Servises Retrived Succesfully",services});
@@ -29,7 +29,7 @@ exports.getServices = async (req, res) => {
     }
 };
 
-exports.getService = async (req, res) => {
+const getService = async (req, res) => {
     const { id } = req.params;
     try {
         const service = await Service.findById(id);
@@ -43,7 +43,7 @@ exports.getService = async (req, res) => {
     }
 };
 
-exports.updateService = async (req, res) => {
+const updateService = async (req, res) => {
     const { id } = req.params;
     const { serviceName, description, quantity, rate, status } = req.body;
     try {
@@ -64,7 +64,7 @@ exports.updateService = async (req, res) => {
     }
 };
 
-exports.deleteService = async (req, res) => {
+const deleteService = async (req, res) => {
     const { id } = req.params;
     try {
         const deletedService = await Service.findByIdAndDelete(id);
@@ -77,3 +77,12 @@ exports.deleteService = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+
+module.exports = {
+    createService,
+    getService,
+    getServices,
+    updateService,
+    deleteService
+}

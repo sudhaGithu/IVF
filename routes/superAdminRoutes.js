@@ -2,31 +2,33 @@ const express = require('express');
 const router = express.Router();
 const { upload } = require('../middlewares/fileupload')
 
-const superAdminController = require('../controllers/adminController') 
-const adminController = require('../controllers/superAdminController')
+const AdminController = require('../controllers/adminController') 
+const superAdminController = require('../controllers/superAdminController')
 const ivfCenterController = require('../controllers/ivfCenterController');
+const authentication = require('../middlewares/authenticate')
+const checkPermission = require('../middlewares/permissionAuthorizer')
 
 //superadmin creation and admin login
-router.post('/createsuperadmin', adminController.createAdmin)
-router.post('/superadminlogin' , adminController.loginAdmin)
+router.post('/createsuperadmin', superAdminController.createAdmin)
+router.post('/superadminlogin' , superAdminController.loginAdmin)
 
 // admin routes
-router.post('/createadmin',upload.fields([{ name: 'image', maxCount: 1 }, { name: 'idProof', maxCount: 1 }]), superAdminController.createAdmin)
-router.get('/getalladmins',superAdminController.getallAdmins)
-router.get('/getadminbyid/:id', superAdminController.getAdminById)
-router.put('/adminstatus/:id', superAdminController.adminStatus)
-router.put('/deleteadmin/:id', superAdminController.deleteAdminById)
-router.post('/updateadmin/:id', superAdminController.updateAdminById)
+router.post('/createadmin',authentication.adminauthenticate,checkPermission('Admin','Create'),upload.fields([{ name: 'image', maxCount: 1 }, { name: 'idProof', maxCount: 1 }]), AdminController.createAdmin)
+router.get('/getalladmins',authentication.adminauthenticate,checkPermission('Admin','Read'),AdminController.getallAdmins)
+router.get('/getadminbyid/:id',authentication.adminauthenticate,checkPermission('Admin','Read'), AdminController.getAdminById)
+router.put('/adminstatus/:id',authentication.adminauthenticate,checkPermission('Admin','Update'), AdminController.adminStatus)
+router.put('/deleteadmin/:id',authentication.adminauthenticate,checkPermission('Admin','Delete'), AdminController.deleteAdminById)
+router.post('/updateadmin/:id',authentication.adminauthenticate,checkPermission('Admin','Update'),AdminController.updateAdminById)
 
 
 //ivf center routes
-router.post('/status/:id', ivfCenterController.stausChange)
-router.get('/getallivf-centers', ivfCenterController.getAllIVFCenters);
-router.get('/getivf-centers/:id', ivfCenterController.getIVFCenterById);
-router.post('/addivf-centers', ivfCenterController.createIVFCenter);
-router.put('/updateivf-centers/:id', ivfCenterController.updateIVFCenter);
-router.delete('/deleteivf-centers/:id', ivfCenterController.deleteIVFCenter);
-router.post('/ivf-centerfilter', ivfCenterController.searchIVFCentersByZipCodeAndDate)
+router.post('/status/:id',authentication.adminauthenticate,checkPermission('IVF Centers','Update'), ivfCenterController.stausChange)
+router.get('/getallivf-centers',authentication.adminauthenticate,checkPermission('IVF Centers','Read'), ivfCenterController.getAllIVFCenters);
+router.get('/getivf-centers/:id',authentication.adminauthenticate,checkPermission('IVF Centers','Read'), ivfCenterController.getIVFCenterById);
+router.post('/addivf-centers',authentication.adminauthenticate,checkPermission('IVF Centers','Create'), ivfCenterController.createIVFCenter);
+router.put('/updateivf-centers/:id',authentication.adminauthenticate,checkPermission('IVF Centers','Update'), ivfCenterController.updateIVFCenter);
+router.delete('/deleteivf-centers/:id',authentication.adminauthenticate,checkPermission('IVF Centers','Delete'), ivfCenterController.deleteIVFCenter);
+router.post('/ivf-centerfilter',authentication.adminauthenticate, checkPermission('IVF Centers','Read'),ivfCenterController.searchIVFCentersByZipCodeAndDate)
 
 
 

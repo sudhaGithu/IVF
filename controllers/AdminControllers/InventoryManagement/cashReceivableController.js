@@ -1,7 +1,7 @@
 const CashReceivable = require('../../../models/AdminModels/InventoryManagement/CashReceivable');
 const Customer = require('../../../models/AdminModels/InventoryManagement/Customer');
 
-exports.createCashReceivable = async (req, res) => {
+const createCashReceivable = async (req, res) => {
     try {
         const { customerId, cashReceived, date, paymentType } = req.body;
 
@@ -29,7 +29,7 @@ exports.createCashReceivable = async (req, res) => {
     }
 };
 
-exports.getAllCashReceivables = async (req, res) => {
+const getAllCashReceivables = async (req, res) => {
     try {
         const cashReceivables = await CashReceivable.find();
         res.status(200).json(cashReceivables);
@@ -38,3 +38,8 @@ exports.getAllCashReceivables = async (req, res) => {
         res.status(500).send({error: err.message});
     }
 };
+
+module.exports = {
+    createCashReceivable,
+    getAllCashReceivables
+} 

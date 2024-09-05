@@ -1,6 +1,6 @@
 const Customer = require('../../../models/AdminModels/InventoryManagement/Customer');
 
-exports.createCustomer = async (req, res) => {
+const createCustomer = async (req, res) => {
     try {
         const { customerName, mobile, email, billingAddress, status } = req.body;
         const newCustomer = new Customer({ customerName, mobile, email, billingAddress, status });
@@ -12,7 +12,7 @@ exports.createCustomer = async (req, res) => {
     }
 };
 
-exports.getAllCustomers = async (req, res) => {
+const getAllCustomers = async (req, res) => {
     try {
         const customers = await Customer.find();
         res.status(200).json(customers);
@@ -53,7 +53,7 @@ exports.getAllCustomers = async (req, res) => {
 
 
 
-exports.updateCustomer = async (req, res) => {
+const updateCustomer = async (req, res) => {
     try {
         const { customerName, mobile, email, billingAddress } = req.body;
         const customer = await Customer.findByIdAndUpdate(req.params.id, { customerName, mobile, email, billingAddress }, { new: true });
@@ -67,7 +67,7 @@ exports.updateCustomer = async (req, res) => {
     }
 };
 
-exports.deleteCustomer = async (req, res) => {
+const deleteCustomer = async (req, res) => {
     try {
         const customer = await Customer.findByIdAndDelete(req.params.id);
         if (!customer) {
@@ -80,7 +80,7 @@ exports.deleteCustomer = async (req, res) => {
     }
 };
 
-exports.getPaidCustomeres = async (req, res) => {
+const getPaidCustomeres = async (req, res) => {
     try {
         const customersinventory = await Customer.find({ status: 'Paid' });
         res.status(200).json({message:"Retrieved paid InventoryCustomers Succesfully",customersinventory});
@@ -91,7 +91,7 @@ exports.getPaidCustomeres = async (req, res) => {
 };
 
 // Get unpaid expenses
-exports.getUnpaidCustomers = async (req, res) => {
+const getUnpaidCustomers = async (req, res) => {
     try {
         const customersinventory = await Customer.find({ status: 'Unpaid' });
         res.status(200).json({message: "Retrieved Unpaid InventoryCustomers Succesfully",customersinventory});
@@ -100,3 +100,12 @@ exports.getUnpaidCustomers = async (req, res) => {
         res.status(500).send({error: err.message});
     }
 };
+
+module.exports  = {
+    createCustomer,
+    getAllCustomers,
+    getPaidCustomeres,
+    getUnpaidCustomers,
+    updateCustomer,
+    deleteCustomer
+}

@@ -1,6 +1,6 @@
 const ExpenseInvoice = require('../../../models/AdminModels/InventoryManagement/ExpenseInvoice');
 
-exports.createExpenseInvoice = async (req, res) => {
+const createExpenseInvoice = async (req, res) => {
     try {
         const { expenseType, date, itemName, quantity, rate, total, grandTotal, paidAmount, remainingDue, status } = req.body;
         const newInvoice = new ExpenseInvoice({ expenseType, date, itemName, quantity, rate, total, grandTotal, paidAmount, remainingDue, status });
@@ -12,7 +12,7 @@ exports.createExpenseInvoice = async (req, res) => {
     }
 };
 
-exports.getAllExpenseInvoices = async (req, res) => {
+const getAllExpenseInvoices = async (req, res) => {
     try {
         const invoices = await ExpenseInvoice.find();
         res.status(200).json(invoices);
@@ -22,7 +22,7 @@ exports.getAllExpenseInvoices = async (req, res) => {
     }
 };
 
-exports.getExpenseInvoice = async (req, res) => {
+const getExpenseInvoice = async (req, res) => {
     try {
         const invoice = await ExpenseInvoice.findById(req.params.id);
         if (!invoice) {
@@ -35,7 +35,7 @@ exports.getExpenseInvoice = async (req, res) => {
     }
 };
 
-exports.updateExpenseInvoice = async (req, res) => {
+const updateExpenseInvoice = async (req, res) => {
     try {
         const { expenseType, date, itemName, quantity, rate, total, grandTotal, paidAmount, remainingDue, status } = req.body;
         const invoice = await ExpenseInvoice.findByIdAndUpdate(
@@ -53,7 +53,7 @@ exports.updateExpenseInvoice = async (req, res) => {
     }
 };
 
-exports.deleteExpenseInvoice = async (req, res) => {
+const deleteExpenseInvoice = async (req, res) => {
     try {
         const invoice = await ExpenseInvoice.findByIdAndDelete(req.params.id);
         if (!invoice) {
@@ -67,7 +67,7 @@ exports.deleteExpenseInvoice = async (req, res) => {
 };
 
 // Get paid expenses
-exports.getPaidExpenses = async (req, res) => {
+const getPaidExpenses = async (req, res) => {
     try {
         const invoices = await ExpenseInvoice.find({ status: 'Paid' });
         res.status(200).json(invoices);
@@ -78,7 +78,7 @@ exports.getPaidExpenses = async (req, res) => {
 };
 
 // Get unpaid expenses
-exports.getUnpaidExpenses = async (req, res) => {
+const getUnpaidExpenses = async (req, res) => {
     try {
         const invoices = await ExpenseInvoice.find({ status: 'Unpaid' });
         res.status(200).json({message: "Retrieved Unpaid Expenses Succesfully",invoices});
@@ -87,3 +87,15 @@ exports.getUnpaidExpenses = async (req, res) => {
         res.status(500).send({error: err.message});
     }
 };
+
+
+
+module.exports = {
+    createExpenseInvoice,
+    getAllExpenseInvoices,
+    getExpenseInvoice,
+    getPaidExpenses,
+    getUnpaidExpenses,
+    updateExpenseInvoice,
+    deleteExpenseInvoice
+}

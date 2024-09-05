@@ -1,4 +1,4 @@
-const Priority = require('../../models/TicketingModels/priorityModel');
+const Priority = require('../../models/TicketingModels/ticketPriorityModel');
 
 exports.createPriority = async (req, res) => {
     const { name } = req.body;

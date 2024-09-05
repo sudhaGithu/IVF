@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 //app.post('/admin', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'idProof', maxCount: 1 }]), 
 const createAdmin = async (req, res) => {
     try {
-      const { fullName, phoneNumber, email, password } = req.body;
+      const { fullName, phoneNumber, email, password, role } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
   
       const admin = new Admin({
@@ -14,7 +14,8 @@ const createAdmin = async (req, res) => {
         email,
         password: hashedPassword,
         image: req.files['image'][0].path,
-        idProof: req.files['idProof'][0].path
+        idProof: req.files['idProof'][0].path,
+        role
       });
   
       await admin.save();
@@ -28,7 +29,7 @@ const createAdmin = async (req, res) => {
   // Read all admins
 const getallAdmins = async (req, res) => {
     try {
-        const admins = await Admin.find({ deleted: false });
+        const admins = await Admin.find({ deleted: false }).populate('role');
         res.send(admins);
       } catch (err) {
         console.error(err);
@@ -39,7 +40,7 @@ const getallAdmins = async (req, res) => {
   // Read admin by ID
 const getAdminById =  async (req, res) => {
     try {
-        const admin = await Admin.findById(req.params.id);
+        const admin = await Admin.findById(req.params.id).populate('role');
         if (!admin || admin.deleted) {
           return res.status(404).send('Admin not found');
         }
@@ -111,11 +112,50 @@ const adminStatus =  async (req, res) => {
   };
 
 
+  const loginAdmin = async (req, res) => {
+    try{
+    const { email, password } = req.body
+    const user = await Admin.findOne({ email })
+       // Generate JWT token
+       const payload = { user: {
+        id: user.id,
+        email: user.email
+        // Add any other fields you want to include in the token
+      } };
+       const token = jwt.sign(payload,process.env.JWT_SECRET, { expiresIn: '12h' });
+       if (user && (await bcrypt.compare(password, user.password))) {
+  
+      //logger.info('Admin logged in successfully', { adminId: user._id });
+  
+        res.json({
+          message:"login successfully",
+            token: token
+        })
+  }
+  else{
+  
+        // Log login attempt with invalid credentials
+        //logger.warn('Invalid login attempt', { email: email });
+  
+    res.json({
+      message:"Invalid credentials"
+    })
+  }
+  }catch(error){
+    //logger.error('Error logging in admin:', { error: error.message });
+    res.status(500).json({ error: 'Unable to login admin',
+      message : error.message
+     });
+  
+  }
+  }
+
 module.exports = {
     createAdmin,
     getAdminById,
     getallAdmins,
     updateAdminById,
     deleteAdminById,
-    adminStatus
+    adminStatus,
+    loginAdmin
 }

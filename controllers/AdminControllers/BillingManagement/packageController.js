@@ -1,6 +1,6 @@
 const Package = require('../../../models/AdminModels/BillingManagement/packageModel');
 
-exports.createPackage = async (req, res) => {
+const createPackage = async (req, res) => {
     const { packageName, description, services, discount, status } = req.body;
     try {
         const newPackage = new Package({
@@ -19,7 +19,7 @@ exports.createPackage = async (req, res) => {
     }
 };
 
-exports.getPackages = async (req, res) => {
+const getPackages = async (req, res) => {
     try {
         const packages = await Package.find();
         res.status(200).json({message:"Packages Retrieved Succesfully",packages});
@@ -29,7 +29,7 @@ exports.getPackages = async (req, res) => {
     }
 };
 
-exports.getPackage = async (req, res) => {
+const getPackage = async (req, res) => {
     const { id } = req.params;
     try {
         const package = await Package.findById(id);
@@ -42,8 +42,7 @@ exports.getPackage = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
-
-exports.updatePackage = async (req, res) => {
+const updatePackage = async (req, res) => {
     const { id } = req.params;
     const { packageName, description, services, discount, status } = req.body;
     try {
@@ -64,7 +63,7 @@ exports.updatePackage = async (req, res) => {
     }
 };
 
-exports.deletePackage = async (req, res) => {
+const deletePackage = async (req, res) => {
     const { id } = req.params;
     try {
         const deletedPackage = await Package.findByIdAndDelete(id);
@@ -77,3 +76,13 @@ exports.deletePackage = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+
+module.exports = {
+    createPackage,
+    getPackage,
+    getPackages,
+    updatePackage,
+    deletePackage
+
+}

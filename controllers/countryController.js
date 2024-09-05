@@ -1,4 +1,4 @@
-const Country = require('../models/countryyModel');
+const Country = require('../models/countryModel');
 
 const createCountry = async (req, res) => {
   try {

@@ -1,6 +1,6 @@
 const Contact = require('../../models/TicketingModels/contactModel');
 const Organization = require('../../models/TicketingModels/organizationModel');
-const Country = require('../../models/TicketingModels/countryModel');
+const Country = require('../../models/countryModel');
 
 exports.createContact = async (req, res) => {
     const { firstName, lastName, title, phone, email, organization, address, department, city, country } = req.body;

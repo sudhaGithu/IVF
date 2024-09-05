@@ -1,5 +1,5 @@
 const Organization = require('../../models/TicketingModels/organizationModel');
-const Country = require('../../models/TicketingModels/countryModel');
+const Country = require('../../models/countryModel');
 
 exports.createOrganization = async (req, res) => {
     const { name, phone, email, address, city, state, country, postalCode } = req.body;

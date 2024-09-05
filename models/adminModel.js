@@ -29,6 +29,11 @@ const adminSchema = new mongoose.Schema({
     type : Boolean,
     default : true
   },
+  role:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Role',
+    required: true
+  },
   deleted:{
     type : Boolean,
     default : false

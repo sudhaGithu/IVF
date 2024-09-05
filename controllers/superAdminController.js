@@ -1,4 +1,4 @@
-const Admin = require('../models/SuperAdminModle');
+const Admin = require('../models/adminModel');
 const logger = require('../middlewares/logger')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
@@ -6,18 +6,19 @@ const bcrypt = require('bcryptjs');
 // Admin operations: create, update, delete
 const createAdmin = async (req, res) => {
   try {
-    const { name, email, password,phoneNumber  } = req.body;
-    console.log(name, email, password, phoneNumber);
+    const { fullName, email, password,phoneNumber, role } = req.body;
+    console.log(fullName, email, password, phoneNumber);
     //hashing password
     const salt = await bcrypt.genSalt(10)
     const hashedpassword = await bcrypt.hash(password, salt)
 
 
     const admin = new Admin({
-      name,
+      fullName,
       email,
       password:hashedpassword,
-      phoneNumber
+      phoneNumber,
+      role
     });
 
     await admin.save();
@@ -53,10 +54,7 @@ const loginAdmin = async (req, res) => {
     logger.info('Admin logged in successfully', { adminId: user._id });
 
       res.json({
-          _id: user.id,
-          name: user.name,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
+        message:"login successfully",
           token: token
       })
 }
@@ -71,7 +69,9 @@ else{
 }
 }catch(error){
   logger.error('Error logging in admin:', { error: error.message });
-  res.status(500).json({ error: 'Unable to login admin' });
+  res.status(500).json({ error: 'Unable to login admin',
+    message : error.message
+   });
 
 }
 }

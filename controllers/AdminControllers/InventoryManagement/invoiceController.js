@@ -1,6 +1,6 @@
 const Invoice = require('../../../models/AdminModels/InventoryManagement/Invoice');
 
-exports.createInvoice = async (req, res) => {
+const createInvoice = async (req, res) => {
     try {
         const {
             customerName, date, itemName, availableQuantity, quantity, unitCode, rate,
@@ -20,7 +20,7 @@ exports.createInvoice = async (req, res) => {
     }
 };
 
-exports.getAllInvoices = async (req, res) => {
+const getAllInvoices = async (req, res) => {
     try {
         const invoices = await Invoice.find();
         res.status(200).json(invoices);
@@ -47,7 +47,7 @@ exports.getAllInvoices = async (req, res) => {
 //     }
 // };
 
-exports.updateInvoice = async (req, res) => {
+const updateInvoice = async (req, res) => {
     try {
         const { id } = req.params;
         const {
@@ -77,7 +77,7 @@ exports.updateInvoice = async (req, res) => {
     }
 };
 
-exports.deleteInvoice = async (req, res) => {
+const deleteInvoice = async (req, res) => {
     try {
         const { id } = req.params;
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -96,7 +96,7 @@ exports.deleteInvoice = async (req, res) => {
     }
 };
 
-exports.getPaidInvoices = async (req, res) => {
+const getPaidInvoices = async (req, res) => {
     try {
         const invoices = await Invoice.find({ status: 'paid' });
         res.status(200).json({message:"Paid Invoices Retrieved Succesfully",invoices});
@@ -106,7 +106,7 @@ exports.getPaidInvoices = async (req, res) => {
     }
 };
 
-exports.getUnpaidInvoices = async (req, res) => {
+const getUnpaidInvoices = async (req, res) => {
     try {
         const invoices = await Invoice.find({ status: 'unpaid' });
         res.status(200).json({message:"Unpaid Invoices Retrieved Succesfully",invoices});
@@ -115,3 +115,12 @@ exports.getUnpaidInvoices = async (req, res) => {
         res.status(500).send({error: err.message});
     }
 };
+
+module.exports = {
+    createInvoice,
+    getAllInvoices,
+    getPaidInvoices,
+    getUnpaidInvoices,
+    updateInvoice,
+    deleteInvoice
+}

@@ -1,6 +1,6 @@
 const User = require('../../models/TicketingModels/userModel');
-const Country = require('../../models/TicketingModels/countryModel');
-const Role = require('../../models/AdminModels/role');
+const Country = require('../../models/countryModel');
+const Role = require('../../models/Roles/role');
 
 exports.createUser = async (req, res) => {
     const { firstName, lastName, email, phoneNo, city, address, country, password, role, photo } = req.body;

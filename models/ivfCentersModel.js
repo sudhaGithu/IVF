@@ -23,7 +23,7 @@ const ivfCenterSchema = new mongoose.Schema({
             required: true
         },
         state: { type: mongoose.Schema.Types.ObjectId, ref: 'State', required: true },
-        country: { type: mongoose.Schema.Types.ObjectId, ref: 'Country', required: true }
+        country: { type: mongoose.Schema.Types.ObjectId, ref: 'Countryy', required: true }
     },
     createdOn:{type:Date, default: Date.now()},
     status:{ type : Boolean, default : true },

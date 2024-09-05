@@ -1,6 +1,7 @@
 const Admission = require('../../../models/AdminModels/BillingManagement/patientAdmissionModel');
+const { getallAdmins } = require('../../adminController');
 
-exports.createAdmission = async (req, res) => {
+const createAdmission = async (req, res) => {
     const {
         patientId, doctorName, roomName, bedNumber, admissionDate, dischargeDate, packageName, 
         insuranceName, policyNo, agentName, guardianName, guardianRelation, guardianContact, 
@@ -21,7 +22,7 @@ exports.createAdmission = async (req, res) => {
     }
 };
 
-exports.getAdmissions = async (req, res) => {
+const getAdmissions = async (req, res) => {
     try {
         const admissions = await Admission.find();
         res.status(200).json({message:"Patient Admissions Retrieved Succesfully",admissions});
@@ -31,7 +32,7 @@ exports.getAdmissions = async (req, res) => {
     }
 };
 
-exports.getAdmission = async (req, res) => {
+const getAdmission = async (req, res) => {
     const { id } = req.params;
     try {
         const admission = await Admission.findById(id);
@@ -45,7 +46,7 @@ exports.getAdmission = async (req, res) => {
     }
 };
 
-exports.updateAdmission = async (req, res) => {
+const updateAdmission = async (req, res) => {
     const { id } = req.params;
     const {
         patientId, doctorName, roomName, bedNumber, admissionDate, dischargeDate, packageName, 
@@ -68,7 +69,7 @@ exports.updateAdmission = async (req, res) => {
     }
 };
 
-exports.deleteAdmission = async (req, res) => {
+const deleteAdmission = async (req, res) => {
     const { id } = req.params;
     try {
         const deletedAdmission = await Admission.findByIdAndDelete(id);
@@ -81,3 +82,11 @@ exports.deleteAdmission = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createAdmission,
+    getAdmission,
+    getAdmissions,
+    updateAdmission,
+    deleteAdmission
+}

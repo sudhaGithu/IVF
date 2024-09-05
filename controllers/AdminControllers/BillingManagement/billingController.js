@@ -1,6 +1,6 @@
 const Billing = require('../../../models/AdminModels/BillingManagement/billingModel');
 
-exports.createBilling = async (req, res) => {
+const createBilling = async (req, res) => {
     const {
         patientId, billDate, patientName, dateOfBirth, address, sex, admissionDate,
         dischargeDate, packageName, insuranceName, totalDays, policyNo, serviceName,
@@ -24,7 +24,7 @@ exports.createBilling = async (req, res) => {
     }
 };
 
-exports.getBilling = async (req, res) => {
+const getBilling = async (req, res) => {
     const { id } = req.params;
     try {
         const billing = await Billing.findById(id).populate('patientId');
@@ -38,7 +38,7 @@ exports.getBilling = async (req, res) => {
     }
 };
 
-exports.getAllBillings = async (req, res) => {
+const getAllBillings = async (req, res) => {
     try {
         const billings = await Billing.find();
         res.status(200).json({message:" All Bills Retrieved Succesfully",billings});
@@ -48,7 +48,7 @@ exports.getAllBillings = async (req, res) => {
     }
 };
 
-exports.updateBilling = async (req, res) => {
+const updateBilling = async (req, res) => {
     const { id } = req.params;
     const {
         patientId, billDate, patientName, dateOfBirth, address, sex, admissionDate,
@@ -75,7 +75,7 @@ exports.updateBilling = async (req, res) => {
     }
 };
 
-exports.deleteBilling = async (req, res) => {
+const deleteBilling = async (req, res) => {
     const { id } = req.params;
     try {
         const deletedBilling = await Billing.findByIdAndDelete(id);
@@ -88,3 +88,12 @@ exports.deleteBilling = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+
+module.exports = {
+    createBilling,
+    getAllBillings,
+    getBilling,
+    updateBilling,
+    deleteBilling
+}

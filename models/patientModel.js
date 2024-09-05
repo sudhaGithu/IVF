@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const AddressSchema = new Schema({
   address1: String,
   address2: String,
-  country: { type: Schema.Types.ObjectId, ref: 'Country' }, // Reference to Country model
+  country: { type: Schema.Types.ObjectId, ref: 'Countryy' }, // Reference to Country model
   state: { type: Schema.Types.ObjectId, ref: 'State' },       // Reference to State model
   district: { type: String, required: true },
   pincode: String

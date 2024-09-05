@@ -1,4 +1,4 @@
-const Status = require('../../models/TicketingModels/statusModel');
+const Status = require('../../models/TicketingModels/ticketStatusModel');
 
 exports.createStatus = async (req, res) => {
     const { name } = req.body;

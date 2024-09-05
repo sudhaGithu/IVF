@@ -1,7 +1,7 @@
 // app/controllers/bedController.js
 const Bed = require('../../../models/AdminModels/BedManager/bedModel');
 
-exports.createBed = async (req, res) => {
+const createBed = async (req, res) => {
   try {
     const newBed = new Bed(req.body);
     const savedBed = await newBed.save();
@@ -11,7 +11,7 @@ exports.createBed = async (req, res) => {
   }
 };
 
-exports.getBeds = async (req, res) => {
+const getBeds = async (req, res) => {
   try {
     const beds = await Bed.find({ isDeleted: false });
     res.send(beds);
@@ -20,7 +20,7 @@ exports.getBeds = async (req, res) => {
   }
 };
 
-exports.getBedById = async (req, res) => {
+const getBedById = async (req, res) => {
   try {
     const bed = await Bed.findById(req.params.id);
     if (!bed) {
@@ -32,7 +32,7 @@ exports.getBedById = async (req, res) => {
   }
 };
 
-exports.updateBed = async (req, res) => {
+const updateBed = async (req, res) => {
   try {
     const updatedBed = await Bed.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedBed) {
@@ -44,7 +44,7 @@ exports.updateBed = async (req, res) => {
   }
 };
 
-exports.deleteBed = async (req, res) => {
+const deleteBed = async (req, res) => {
   try {
     const bed = await Bed.findByIdAndUpdate(req.params.id, { isDeleted: true, deletedAt: new Date() });
     if (!bed) return res.status(404).send('Bed not found');
@@ -53,3 +53,12 @@ exports.deleteBed = async (req, res) => {
     res.status(500).send(err.message);
   }
 };
+
+
+module.exports = {
+  createBed,
+  getBedById,
+  getBeds,
+  updateBed,
+  deleteBed
+}

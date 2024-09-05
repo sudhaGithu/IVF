@@ -1,4 +1,4 @@
-const Category = require('../../models/TicketingModels/categoryModel');
+const Category = require('../../models/TicketingModels/ticketCategoryModel');
 
 const createCategory = async (req, res) => {
     const { name } = req.body;

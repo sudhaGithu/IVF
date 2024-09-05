@@ -1,4 +1,4 @@
-const Type = require('../../models/TicketingModels/typeModel');
+const Type = require('../../models/TicketingModels/ticketTypeModel');
 
 exports.createType = async (req, res) => {
     const { name } = req.body;

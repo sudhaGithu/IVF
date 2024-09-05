@@ -30,12 +30,12 @@ const employeeSchema = new mongoose.Schema({
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Department',
+    ref: 'Departments',
     required: true
   },
   role: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Role',
+    ref: 'Roles',
     required: true
   },
   date_of_birth: {
