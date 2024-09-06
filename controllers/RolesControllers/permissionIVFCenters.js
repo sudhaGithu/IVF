@@ -3,15 +3,27 @@ const CenterAdminModule = require('../../models/Roles/permissionsIVFCenters')
 // Create a new CenterAdminModule
 const addpermissionsCenter = async (req, res) => {
     try {
-        const { centerId, adminId, modulePermissions } = req.body;
+        var centerAdminModule = new CenterAdminModule();
+        console.log(req.body.adminId);
+        
+        if(req.body.centerId)
+        {
+            const { centerId, adminId, modulePermissions } = req.body;
+            centerAdminModule = new CenterAdminModule({centerId, adminId, modulePermissions});
+        }
+        else{
+            const { adminId, modulePermissions } = req.body;
+            centerAdminModule = new CenterAdminModule({ adminId, modulePermissions});
+        }
+        //const { centerId, adminId, modulePermissions } = req.body;
         
         // Validation can be added here if needed (e.g., checking if references exist)
         
-        const centerAdminModule = new CenterAdminModule({ centerId, adminId, modulePermissions });
+        
         await centerAdminModule.save();
-        res.status(201).send(centerAdminModule);
+        res.status(201).json(centerAdminModule);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({message : error.message});
     }
 };
 
@@ -23,9 +35,9 @@ const getAllpermissionsCenter = async (req, res) => {
             .populate('adminId')
             .populate('modulePermissions.moduleId')
             .populate('modulePermissions.permissions');
-        res.status(200).send(centerAdminModules);
+        res.status(200).json(centerAdminModules);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).json(error);
     }
 };
 

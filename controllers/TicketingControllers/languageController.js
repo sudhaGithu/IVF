@@ -1,6 +1,6 @@
 const Language = require('../../models/TicketingModels/languageModel');
 
-exports.createLanguage = async (req, res) => {
+const createLanguage = async (req, res) => {
     const { name, code } = req.body;
     try {
         const language = new Language({ name, code });
@@ -11,7 +11,7 @@ exports.createLanguage = async (req, res) => {
     }
 };
 
-exports.getLanguages = async (req, res) => {
+const getLanguages = async (req, res) => {
     try {
         const languages = await Language.find();
         res.status(200).json(languages);
@@ -19,3 +19,8 @@ exports.getLanguages = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createLanguage,
+    getLanguages
+}

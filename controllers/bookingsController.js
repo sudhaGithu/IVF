@@ -17,7 +17,7 @@ const createOrder = async (req, res) => {
 const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({ deleted: false });
-    res.json(orders);
+    res.status(200).json(orders);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -28,7 +28,7 @@ const getOrder = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
     if (order) {
-      res.json(order);
+      res.status(200).json(order);
     } else {
       res.status(404).json({ message: 'Order not found' });
     }
@@ -43,7 +43,7 @@ const updateOrder = async (req, res) => {
     const { id } = req.params;
     const order = await Order.findByIdAndUpdate(id, req.body, { new: true });
     if (order) {
-      res.json(order);
+      res.status(200).json(order);
     } else {
       res.status(404).json({ message: 'Order not found' });
     }
@@ -58,7 +58,7 @@ const deleteOrder = async (req, res) => {
     const { id } = req.params;
     const order = await Order.findByIdAndUpdate(id, { deleted: true }, { new: true });
     if (order) {
-      res.json({ message: 'Order deleted successfully' });
+      res.status(200).json({ message: 'Order deleted successfully' });
     } else {
       res.status(404).json({ message: 'Order not found' });
     }

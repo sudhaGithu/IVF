@@ -2,7 +2,7 @@ const User = require('../../models/TicketingModels/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-exports.signup = async (req, res) => {
+const signup = async (req, res) => {
     const { username, email, password } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
     }
 };
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -27,6 +27,12 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.logout = (req, res) => {
+const logout = (req, res) => {
     res.json({ message: 'Logout successful' });
 };
+
+module.exports = {
+    signup,
+    login,
+    logout
+}

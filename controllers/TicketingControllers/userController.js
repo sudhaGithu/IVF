@@ -2,7 +2,7 @@ const User = require('../../models/TicketingModels/userModel');
 const Country = require('../../models/countryModel');
 const Role = require('../../models/Roles/role');
 
-exports.createUser = async (req, res) => {
+const createUser = async (req, res) => {
     const { firstName, lastName, email, phoneNo, city, address, country, password, role, photo } = req.body;
     try {
         const countryRecord = await Country.findById(country);
@@ -35,7 +35,7 @@ exports.createUser = async (req, res) => {
     }
 };
 
-exports.getUsers = async (req, res) => {
+const getUsers = async (req, res) => {
     try {
         const users = await User.find().populate('country').populate('role');
         res.status(200).json(users);
@@ -43,3 +43,8 @@ exports.getUsers = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createUser,
+    getUsers
+}

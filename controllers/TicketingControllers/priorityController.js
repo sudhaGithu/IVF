@@ -1,6 +1,6 @@
 const Priority = require('../../models/TicketingModels/ticketPriorityModel');
 
-exports.createPriority = async (req, res) => {
+const createPriority = async (req, res) => {
     const { name } = req.body;
     try {
         const priority = new Priority({ name });
@@ -11,7 +11,7 @@ exports.createPriority = async (req, res) => {
     }
 };
 
-exports.getPriorities = async (req, res) => {
+const getPriorities = async (req, res) => {
     try {
         const priorities = await Priority.find();
         res.status(200).json(priorities);
@@ -19,3 +19,8 @@ exports.getPriorities = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createPriority,
+    getPriorities
+}

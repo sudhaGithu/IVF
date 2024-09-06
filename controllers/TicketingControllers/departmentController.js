@@ -1,6 +1,6 @@
 const Department = require('../../models/TicketingModels/ticketDepartmentModel');
 
-exports.createDepartment = async (req, res) => {
+const createDepartment = async (req, res) => {
     const { name } = req.body;
     try {
         const department = new Department({ name });
@@ -11,7 +11,7 @@ exports.createDepartment = async (req, res) => {
     }
 };
 
-exports.getDepartments = async (req, res) => {
+const getDepartments = async (req, res) => {
     try {
         const departments = await Department.find();
         res.status(200).json(departments);
@@ -19,3 +19,8 @@ exports.getDepartments = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createDepartment,
+    getDepartments
+}

@@ -52,7 +52,7 @@ const getBranchById = async (req, res) => {
         if (!branch) {
             return res.status(404).json({ message: 'Branch not found' });
         }
-        res.json(branch);
+        res.status(200).json(branch);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -82,7 +82,7 @@ const updateBranch = async (req, res) => {
         branch.assignAdmin = assignAdmin;
 
         const updatedBranch = await branch.save();
-        res.json({ 
+        res.status(200).json({ 
             message : "Branch updated successfully",
             data : updatedBranch,
         }
@@ -102,7 +102,7 @@ const deleteBranch = async (req, res) => {
         if (!branch) {
             return res.status(404).json({ message: 'Branch not found' });
         }
-        res.json({ message: 'Branch deleted' });
+        res.status(200).json({ message: 'Branch deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -119,7 +119,9 @@ const updateBranchStatus = async (req, res) => {
         branch.status = !branch.status;
 
         const updatedBranch = await branch.save();
-        res.json({message : "Branch status updated successfully"});
+        res.status(200).json({message : "Branch status updated successfully",
+            updateBranch : updateBranch
+        });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

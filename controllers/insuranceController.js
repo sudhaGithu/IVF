@@ -4,9 +4,9 @@ const createInsurance = async (req, res) => {
     try {
       const insurance = new Insurance(req.body);
       await insurance.save();
-      res.status(201).send(insurance);
+      res.status(201).json(insurance);
     } catch (err) {
-      res.status(400).send(err);
+      res.status(400).json(err);
     }
   };
   

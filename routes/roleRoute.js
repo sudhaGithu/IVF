@@ -9,7 +9,7 @@ const authentication = require('../middlewares/authenticate')
 
 
 // Role Routes
-router.post('/addroles',authentication.adminauthenticate, roleController.addRole);
+router.post('/addroles', roleController.addRole);
 router.put('/updaterole/:id',authentication.adminauthenticate, roleController.updateRole);
 router.delete('/deleterole/:id',authentication.adminauthenticate, roleController.deleteRole);
 router.get('/getallroles',authentication.adminauthenticate, roleController.getAllRole);

@@ -1,6 +1,6 @@
 const Status = require('../../models/TicketingModels/ticketStatusModel');
 
-exports.createStatus = async (req, res) => {
+const createStatus = async (req, res) => {
     const { name } = req.body;
     try {
         const status = new Status({ name });
@@ -10,3 +10,8 @@ exports.createStatus = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createStatus
+    
+}

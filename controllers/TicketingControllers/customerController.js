@@ -1,6 +1,6 @@
 const Customer = require('../../models/TicketingModels/customerModel');
 
-exports.createCustomer = async (req, res) => {
+const createCustomer = async (req, res) => {
     const { firstName, lastName, email, phone, city, address, country, password } = req.body;
     try {
         const customer = new Customer({ firstName, lastName, email, phone, city, address, country, password });
@@ -11,7 +11,7 @@ exports.createCustomer = async (req, res) => {
     }
 };
 
-exports.getCustomers = async (req, res) => {
+const getCustomers = async (req, res) => {
     try {
         const customers = await Customer.find();
         res.status(200).json(customers);
@@ -19,3 +19,8 @@ exports.getCustomers = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createCustomer,
+    getCustomers
+}

@@ -1,6 +1,6 @@
 const KnowledgeBase = require('../../models/TicketingModels/knowledgeBaseModel');
 
-exports.createKnowledgeBase = async (req, res) => {
+const createKnowledgeBase = async (req, res) => {
     const { title, type, details } = req.body;
     try {
         const knowledgeBase = new KnowledgeBase({ title, type, details });
@@ -11,7 +11,7 @@ exports.createKnowledgeBase = async (req, res) => {
     }
 };
 
-exports.getKnowledgeBases = async (req, res) => {
+const getKnowledgeBases = async (req, res) => {
     try {
         const knowledgeBases = await KnowledgeBase.find();
         res.status(200).json(knowledgeBases);
@@ -19,3 +19,8 @@ exports.getKnowledgeBases = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createKnowledgeBase,
+    getKnowledgeBases
+}

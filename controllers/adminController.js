@@ -19,7 +19,7 @@ const createAdmin = async (req, res) => {
       });
   
       await admin.save();
-      res.status(201).send(admin);
+      res.status(201).json(admin);
     } catch (err) {
       console.error(err);
       res.status(500).send({message : err.message});
@@ -30,10 +30,10 @@ const createAdmin = async (req, res) => {
 const getallAdmins = async (req, res) => {
     try {
         const admins = await Admin.find({ deleted: false }).populate('role');
-        res.send(admins);
+        res.json(admins);
       } catch (err) {
         console.error(err);
-        res.status(500).send({message : err.message});
+        res.status(500).json({message : err.message});
       }
   };
   
@@ -42,12 +42,12 @@ const getAdminById =  async (req, res) => {
     try {
         const admin = await Admin.findById(req.params.id).populate('role');
         if (!admin || admin.deleted) {
-          return res.status(404).send('Admin not found');
+          return res.status(404).json('Admin not found');
         }
-        res.send(admin);
+        res.status(200).json(admin);
       } catch (err) {
         console.error(err);
-        res.status(500).send({message : err.message});
+        res.status(500).json({message : err.message});
       }
   };
   
@@ -63,13 +63,13 @@ const updateAdminById = async (req, res) => {
       } , { new: true });
   
       if (!admin) {
-        return res.status(404).send('Admin not found');
+        return res.status(404).json('Admin not found');
       }
   
-      res.send(admin);
+      res.status(200).json(admin);
     } catch (err) {
       console.error(err);
-      res.status(500).send({message : err.message});
+      res.status(500).json({message : err.message});
     }
   };
   
@@ -81,13 +81,13 @@ const deleteAdminById =  async (req, res) => {
         }, { new: true });
     
         if (!admin) {
-          return res.status(404).send('Admin not found');
+          return res.status(404).json('Admin not found');
         }
     
-        res.send('Admin soft deleted successfully');
+        res.status(200).json('Admin soft deleted successfully');
       } catch (err) {
         console.error(err);
-        res.status(500).send({message : err.message});
+        res.status(500).json({message : err.message});
       }
   };
 
@@ -97,14 +97,14 @@ const adminStatus =  async (req, res) => {
       const admin = await Admin.findById(req.params.id);
   
       if (!admin) {
-        return res.status(404).send('Admin not found');
+        return res.status(404).json('Admin not found');
       }
   
       // Toggle the status (true to false or false to true)
       admin.status = !admin.status;
   
       await admin.save();
-      res.send(admin);
+      res.status(200).json(admin);
     } catch (err) {
       console.error(err);
       res.status(500).send({message : err.message});

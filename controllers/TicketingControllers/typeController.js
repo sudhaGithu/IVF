@@ -1,6 +1,6 @@
 const Type = require('../../models/TicketingModels/ticketTypeModel');
 
-exports.createType = async (req, res) => {
+const createType = async (req, res) => {
     const { name } = req.body;
     try {
         const type = new Type({ name });
@@ -11,7 +11,7 @@ exports.createType = async (req, res) => {
     }
 };
 
-exports.getTypes = async (req, res) => {
+const getTypes = async (req, res) => {
     try {
         const types = await Type.find();
         res.status(200).json(types);
@@ -19,3 +19,8 @@ exports.getTypes = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createType,
+    getTypes
+}

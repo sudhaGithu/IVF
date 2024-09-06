@@ -1,6 +1,6 @@
 const FAQ = require('../../models/TicketingModels/faqModel');
 
-exports.createFAQ = async (req, res) => {
+const createFAQ = async (req, res) => {
     const { name, status, description } = req.body;
     try {
         const newFAQ = new FAQ({
@@ -17,7 +17,7 @@ exports.createFAQ = async (req, res) => {
     }
 };
 
-exports.getFAQs = async (req, res) => {
+const getFAQs = async (req, res) => {
     try {
         const faqs = await FAQ.find();
         res.status(200).json(faqs);
@@ -26,3 +26,8 @@ exports.getFAQs = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createFAQ,
+    getFAQs
+}

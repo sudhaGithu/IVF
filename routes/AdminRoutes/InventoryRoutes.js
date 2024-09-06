@@ -1,3 +1,5 @@
+// 
+
 const express = require('express');
 const router = express.Router();
 const cashReceivableController = require('../../controllers/AdminControllers/InventoryManagement/cashReceivableController');
@@ -10,43 +12,43 @@ const authentication = require('../../middlewares/authenticate')
 
 
 //invoice Routes
-router.post('/invoice/Add',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), invoiceController.createInvoice);
-router.get('/invoice/All',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), invoiceController.getAllInvoices);
-router.get('/status/paid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), invoiceController.getPaidInvoices);
-router.get('/status/unpaid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), invoiceController.getUnpaidInvoices);
+router.post('/createInvoice',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), invoiceController.createInvoice);
+router.get('/getAllInvoices',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), invoiceController.getAllInvoices);
+router.get('/getPaidInvoices/paid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), invoiceController.getPaidInvoices);
+router.get('/getUnpaidInvoices/unpaid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), invoiceController.getUnpaidInvoices);
 // router.get('/invoice/:id', invoiceController.getInvoice);
-router.put('/invoice/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Update'), invoiceController.updateInvoice);
-router.delete('/invoice/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Delete'), invoiceController.deleteInvoice);
+router.put('/updateInvoice/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Update'), invoiceController.updateInvoice);
+router.delete('/deleteInvoice/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Delete'), invoiceController.deleteInvoice);
 
 //expensetype Routes
-router.post('/expense-type/Add', authentication.adminauthenticate,checkPermission('Inventory Management','Create'),expenseTypeController.createExpenseType);
-router.put('/expense-type/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Update'), expenseTypeController.updateExpenseType);
-router.get('/expense-types/All',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseTypeController.getAllExpenseTypes);
-router.get('/expense-type/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseTypeController.getExpenseType);
-router.delete('/expense-type/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Delete'),expenseTypeController.deleteExpenseType);
+router.post('/createExpenseType', authentication.adminauthenticate,checkPermission('Inventory Management','Create'),expenseTypeController.createExpenseType);
+router.put('/updateExpenseType/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Update'), expenseTypeController.updateExpenseType);
+router.get('/getAllExpenseTypes',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseTypeController.getAllExpenseTypes);
+router.get('/getExpenseType/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseTypeController.getExpenseType);
+router.delete('/deleteExpenseType/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Delete'),expenseTypeController.deleteExpenseType);
 
 //expenseincoice Routes
-router.post('/expenseincoice/Add',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), expenseInvoiceController.createExpenseInvoice);
-router.get('/expenseincoice/All',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseInvoiceController.getAllExpenseInvoices);
-router.get('/expenseincoice/paid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseInvoiceController.getPaidExpenses); 
-router.get('/expenseincoice/unpaid', authentication.adminauthenticate,checkPermission('Inventory Management','Read'),expenseInvoiceController.getUnpaidExpenses); 
-router.get('/expenseincoice/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Read'),expenseInvoiceController.getExpenseInvoice);
-router.put('/expenseincoice/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Update'),expenseInvoiceController.updateExpenseInvoice);
-router.delete('/expenseincoice/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Delete'),expenseInvoiceController.deleteExpenseInvoice);
+router.post('/createExpenseInvoice',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), expenseInvoiceController.createExpenseInvoice);
+router.get('/getAllExpenseInvoices',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseInvoiceController.getAllExpenseInvoices);
+router.get('/getPaidExpenses/paid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), expenseInvoiceController.getPaidExpenses); 
+router.get('/getUnpaidExpenses/unpaid', authentication.adminauthenticate,checkPermission('Inventory Management','Read'),expenseInvoiceController.getUnpaidExpenses); 
+router.get('/getExpenseInvoice/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Read'),expenseInvoiceController.getExpenseInvoice);
+router.put('/updateExpenseInvoice/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Update'),expenseInvoiceController.updateExpenseInvoice);
+router.delete('/deleteExpenseInvoice/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Delete'),expenseInvoiceController.deleteExpenseInvoice);
 
 
 //Customer routes
-router.post('/Customer/Add',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), customerController.createCustomer);    
-router.get('/Customer/All', authentication.adminauthenticate,checkPermission('Inventory Management','Read'),customerController.getAllCustomers);
+router.post('/createCustomer/Add',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), customerController.createCustomer);    
+router.get('/getAllCustomers', authentication.adminauthenticate,checkPermission('Inventory Management','Read'),customerController.getAllCustomers);
 // router.get('/:id', customerController.getCustomer);
-router.put('/Customer/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Update'),customerController.updateCustomer);
-router.delete('/Customer/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Delete'), customerController.deleteCustomer);
-router.get('/Customer/paid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'),customerController.getPaidCustomeres);
-router.get('/Customer/unpaid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'),customerController.getUnpaidCustomers);
+router.put('/updateCustomer/:id', authentication.adminauthenticate,checkPermission('Inventory Management','Update'),customerController.updateCustomer);
+router.delete('/deleteCustomer/:id',authentication.adminauthenticate,checkPermission('Inventory Management','Delete'), customerController.deleteCustomer);
+router.get('/getPaidCustomeres/paid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'),customerController.getPaidCustomeres);
+router.get('/getUnpaidCustomers/unpaid',authentication.adminauthenticate,checkPermission('Inventory Management','Read'),customerController.getUnpaidCustomers);
 
 //Cashrecievable Routes
-router.post('/Cashrecievable/Add',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), cashReceivableController.createCashReceivable);
-router.get('/Cashrecievable/All',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), cashReceivableController.getAllCashReceivables);
+router.post('/createCashReceivable',authentication.adminauthenticate,checkPermission('Inventory Management','Create'), cashReceivableController.createCashReceivable);
+router.get('/getAllCashReceivables',authentication.adminauthenticate,checkPermission('Inventory Management','Read'), cashReceivableController.getAllCashReceivables);
 
 
-module.exports = router;
+module.exports = router;

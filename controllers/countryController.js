@@ -28,7 +28,7 @@ const getAllCountry = async (req, res) => {
     res.status(200).json(country);
   } catch (err) {
     console.error('Error retrieving states:', err);
-    res.status(500).send({error : err.messages});
+    res.status(500).json({error : err.messages});
   }
 };
 
@@ -39,7 +39,7 @@ const getCountryById = async (req, res) => {
     if (!country) {
       return res.status(404).json({ error: 'Country not found' });
     }
-    res.json(country);
+    res.status(200).json(country);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -56,7 +56,7 @@ const deleteCountry = async (req, res) => {
       return res.status(404).json({ error: 'country not found' });
     }
 
-    res.json({ message: 'country deleted successfully' });
+    res.status(200).json({ message: 'country deleted successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

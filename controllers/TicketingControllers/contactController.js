@@ -2,7 +2,7 @@ const Contact = require('../../models/TicketingModels/contactModel');
 const Organization = require('../../models/TicketingModels/organizationModel');
 const Country = require('../../models/countryModel');
 
-exports.createContact = async (req, res) => {
+const createContact = async (req, res) => {
     const { firstName, lastName, title, phone, email, organization, address, department, city, country } = req.body;
     try {
         const organizationRecord = await Organization.findById(organization);
@@ -35,7 +35,7 @@ exports.createContact = async (req, res) => {
     }
 };
 
-exports.getContacts = async (req, res) => {
+const getContacts = async (req, res) => {
     try {
         const contacts = await Contact.find().populate('organization').populate('country');
         res.status(200).json(contacts);
@@ -43,3 +43,8 @@ exports.getContacts = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createContact,
+    getContacts
+}

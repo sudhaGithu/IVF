@@ -41,7 +41,7 @@ const getEmployeeById = async (req, res) => {
       return res.status(404).json({ error: 'Employee not found' });
     }
 
-    res.json(employee);
+    res.status(200).json(employee);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -81,7 +81,7 @@ const deleteEmployee = async (req, res) => {
       return res.status(404).json({ error: 'Employee not found' });
     }
 
-    res.json({ message: 'Employee deleted successfully' });
+    res.status(200).json({ message: 'Employee deleted successfully' });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -123,7 +123,7 @@ const EmployeeStatus = async (req, res) => {
       employee.status = !employee.status;
       await employee.save();
   
-      res.json({ message: 'Employee status updated successfully', employee });
+      res.status.json({ message: 'Employee status updated successfully', employee });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

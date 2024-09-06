@@ -9,7 +9,7 @@ const Permission = require('../models/Roles/permission');
 const checkPermission = (moduleName, permissionName) => async (req, res, next) => {
     try {
         // Assume user ID is available in the request (e.g., set by authentication middleware)
-        console.log("modulename" , moduleName  ,"permissionName" , permissionName);
+        //console.log("modulename" , moduleName  ,"permissionName" , permissionName);
         
         const userId = req.user.id;
         //console.log(("Permission"));
@@ -27,7 +27,9 @@ const checkPermission = (moduleName, permissionName) => async (req, res, next) =
             //         }
             //     }
             // });
-            if(!(admin.role.name === 'Admin')) return res.status(404).send('User not found');
+            //console.log(admin);
+            
+            if(!(admin.role.name === 'Admin' || admin.role.name === 'SuperAdmin' )) return res.status(404).json('User not found');
             //console.log(admin.role.name);
 
             
@@ -50,13 +52,13 @@ const checkPermission = (moduleName, permissionName) => async (req, res, next) =
             //         path: 'permissions'
             //     }
             // });
-            console.log(centerAdminModule);
+            //console.log(centerAdminModule);
             
-            console.log("permission 2");
+            //console.log("permission 2");
             //console.log(CenterAdminModule.modulePermissions._id);
             
             
-        if (!centerAdminModule) return res.status(404).send('CenterAdminModule not found');
+        if (!centerAdminModule) return res.status(404).json('CenterAdminModule not found');
 
         // Flatten all permissions
         const userPermissions = centerAdminModule.modulePermissions
@@ -68,10 +70,10 @@ const checkPermission = (moduleName, permissionName) => async (req, res, next) =
         if (userPermissions.includes(permissionName)) {
             next(); // Permission granted, proceed to the route handler
         } else {
-            res.status(403).send('Forbidden: You do not have the required permissions');
+            res.status(403).json('Forbidden: You do not have the required permissions');
         }
     } catch (error) {
-        res.status(500).send(error.message);
+        res.status(500).json(error.message);
     }
 };
 

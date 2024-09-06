@@ -1,6 +1,6 @@
 const Settings = require('../../models/TicketingModels/settingsModel');
 
-exports.updateDefaultEmailRecipient = async (req, res) => {
+const updateDefaultEmailRecipient = async (req, res) => {
     const { defaultEmailRecipient } = req.body;
     try {
         let settings = await Settings.findOne();
@@ -16,7 +16,7 @@ exports.updateDefaultEmailRecipient = async (req, res) => {
     }
 };
 
-exports.getDefaultEmailRecipient = async (req, res) => {
+const getDefaultEmailRecipient = async (req, res) => {
     try {
         const settings = await Settings.findOne();
         res.status(200).json(settings);
@@ -24,3 +24,8 @@ exports.getDefaultEmailRecipient = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    updateDefaultEmailRecipient,
+    getDefaultEmailRecipient
+}

@@ -1,7 +1,7 @@
 const Organization = require('../../models/TicketingModels/organizationModel');
 const Country = require('../../models/countryModel');
 
-exports.createOrganization = async (req, res) => {
+const createOrganization = async (req, res) => {
     const { name, phone, email, address, city, state, country, postalCode } = req.body;
     try {
         const countryRecord = await Country.findById(country);
@@ -27,7 +27,7 @@ exports.createOrganization = async (req, res) => {
     }
 };
 
-exports.getOrganizations = async (req, res) => {
+const getOrganizations = async (req, res) => {
     try {
         const organizations = await Organization.find().populate('country');
         res.status(200).json(organizations);
@@ -35,3 +35,8 @@ exports.getOrganizations = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+module.exports = {
+    createOrganization,
+    getOrganizations
+}

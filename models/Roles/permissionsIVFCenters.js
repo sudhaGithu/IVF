@@ -4,7 +4,7 @@ const centerAdminModuleSchema = new mongoose.Schema({
     centerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'IVFCenter',
-        required: true
+        //required: true
     },
     adminId: {
         type: mongoose.Schema.Types.ObjectId,
