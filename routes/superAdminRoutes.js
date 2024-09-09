@@ -11,6 +11,7 @@ const checkPermission = require('../middlewares/permissionAuthorizer')
 //superadmin creation and admin login
 router.post('/createsuperadmin', superAdminController.createAdmin)
 router.post('/superadminlogin' , superAdminController.loginAdmin)
+router.get('/dashboard', superAdminController.getDashboardStats)
 
 // admin routes
 router.post('/createadmin',authentication.adminauthenticate,checkPermission('Admin','Create'),upload.fields([{ name: 'image', maxCount: 1 }, { name: 'idProof', maxCount: 1 }]), AdminController.createAdmin)

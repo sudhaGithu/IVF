@@ -1,5 +1,8 @@
 const Admin = require('../models/adminModel');
 const logger = require('../middlewares/logger')
+const Patient = require('../models/patientModel');
+const Branch = require('../models/branchModel');
+const Center = require('../models/ivfCentersModel');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
 
@@ -76,7 +79,38 @@ else{
 }
 }
 
+const getDashboardStats = async (req, res) => {
+  try {
+      const totalPatients = await Patient.countDocuments();
+      const activePatients = await Patient.countDocuments({ status: 'active' });
+      const totalBranches = await Branch.countDocuments();
+      const activeBranches = await Branch.countDocuments({ status: true });
+      const totalCenters = await Center.countDocuments();
+      const activeCenters = await Center.countDocuments({ status: true });
+      const newPatientsThisMonth = await Patient.countDocuments({
+          createdAt: {
+              $gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+              $lt: new Date()
+          }
+      });
+ 
+      res.status(200).json({
+          totalPatients,
+          activePatients,
+          totalBranches,
+          activeBranches,
+          totalCenters,
+          activeCenters,
+          newPatientsThisMonth
+      });
+  } catch (err) {
+      console.error('Error fetching dashboard stats:', err);
+      res.status(500).send({ error: err.message });
+  }
+};
+
 module.exports = {
     loginAdmin,
-    createAdmin
+    createAdmin,
+    getDashboardStats
 }

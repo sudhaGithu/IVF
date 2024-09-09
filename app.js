@@ -25,19 +25,26 @@ const scheduleRoutes = require('./routes/AdminRoutes/scheduleRoutes');
 
 
 
-// Enable All CORS Requests
-app.use(cors());
+// // Enable All CORS Requests
+// app.use(cors());
 
+// app.use(cors({
+//     origin: '*' // Allow only requests from this origin
+// }));
+
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//     next();
+// });
+
+// Use CORS middleware with custom options
 app.use(cors({
-    origin: '*' // Allow only requests from this origin
-}));
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
+    origin: '*', // Allow requests from any origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'] // Allowed headers
+  }));
 
 
 // Middleware
